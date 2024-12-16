@@ -10,9 +10,9 @@ class UserController extends Controller
 {
     public function register(Request $request) {
         $incomingFields = $request->validate([
-            'username' => 'required',
-            'email' => 'required',
-            'password' => 'required'
+            'username' => ['required', 'min:3', 'max:20', 'unique:users,username'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'confirmed']
         ]);
         User::create($incomingFields);
         return "register";
